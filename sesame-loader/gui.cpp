@@ -122,11 +122,10 @@ long __stdcall wnd_proc(HWND window, uint32_t msg, uintptr_t wparam, uintptr_t l
 }
 
 void gui::create_window(int w, int h, const char* window_name) {
-	VM_SHARK_WHITE_START
 	g_wc = { sizeof(WNDCLASSEX), 0, WNDPROC(wnd_proc), 0L, 0L, GetModuleHandleA(nullptr), LoadIconA( nullptr, MAKEINTRESOURCEA ( 32512 ) ), nullptr, ( HBRUSH ) CreateSolidBrush( RGB ( 0, 0, 0 ) ), window_name, window_name, LoadIconA( nullptr, MAKEINTRESOURCEA ( 32512 ) ) };
 	RegisterClassExA(&g_wc);
 	g_window = CreateWindowExA( 0 , g_wc.lpszClassName, window_name, WS_POPUP, 100, 100, w, h, nullptr, nullptr, g_wc.hInstance, nullptr);
-
+	
 	if (!create_device(g_window)) {
 		cleanup_device();
 		UnregisterClassA(g_wc.lpszClassName, g_wc.hInstance);
@@ -136,7 +135,6 @@ void gui::create_window(int w, int h, const char* window_name) {
 	//LI_FN(ShowWindow) ( LI_FN(GetConsoleWindow)(), SW_HIDE );
 	ShowWindow(g_window, SW_SHOWDEFAULT);
 	UpdateWindow(g_window);
-	VM_SHARK_WHITE_END
 }
 
 std::wstring str_towstr(const std::string& str) {
@@ -398,30 +396,30 @@ int gui::render( ) {
 						// run sign-in on separate thread, use loading spinner if thread not finished (and put text that says loader is updating)
 
 						std::thread( [ ] ( ) {
-							VM_SHARK_WHITE_START
+							VM_SHARK_BLACK_START
 							running_auth = true;
 							if ( signed_in = ph::login( login_request , modules , true ) ) {
 								cur_tab_idx = 1;
 
 								std::thread( [ ] ( ) {
-									VM_SHARK_WHITE_START
+									VM_TIGER_WHITE_START
 									popup_text = login_request.message;
 									popup_title = _( "Success" );
 									open_popup = true;
-									VM_SHARK_WHITE_END
+									VM_TIGER_WHITE_END
 									} ).detach( );
 							}
 							else {
 								std::thread( [ ] ( ) {
-									VM_SHARK_WHITE_START
+									VM_TIGER_WHITE_START
 									popup_text = login_request.message;
 									popup_title = _( "Error" );
 									open_popup = true;
-									VM_SHARK_WHITE_END
+									VM_TIGER_WHITE_END
 									} ).detach( );
 							}
 							running_auth = false;
-							VM_SHARK_WHITE_END
+							VM_SHARK_BLACK_END
 							} ).detach();
 					}
 
@@ -493,30 +491,30 @@ int gui::render( ) {
 						// run sign-in on separate thread, use loading spinner if thread not finished (and put text that says loader is updating)
 
 						std::thread( [ ] ( ) {
-							VM_SHARK_WHITE_START
+							VM_SHARK_BLACK_START
 							running_injector = true;
 							if ( injected = ph::inject( inject_request , modules[ selected_module - 1 ].id ) ) {
 								injected_success = true;
 								std::thread( [ ] ( ) {
-									VM_SHARK_WHITE_START
+									VM_TIGER_WHITE_START
 									popup_text = inject_request.message;
 									popup_title = _( "Success" );
 									open_popup = true;
 									exit_after_popup = true;
-									VM_SHARK_WHITE_END
+									VM_TIGER_WHITE_END
 									} ).detach( );
 							}
 							else {
 								std::thread( [ ] ( ) {
-									VM_SHARK_WHITE_START
+									VM_TIGER_WHITE_START
 									popup_text = inject_request.message;
 									popup_title = _( "Error" );
 									open_popup = true;
-									VM_SHARK_WHITE_END
+									VM_TIGER_WHITE_END
 									} ).detach( );
 							}
 							running_injector = false;
-							VM_SHARK_WHITE_END
+							VM_SHARK_BLACK_END
 							} ).detach( );
 					}
 
