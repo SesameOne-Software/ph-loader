@@ -32,3 +32,4 @@
 *.app
 .vs
 sesame-loader/x64
+x64

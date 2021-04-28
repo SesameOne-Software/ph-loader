@@ -468,7 +468,7 @@ int gui::render( ) {
 					}
 					else {
 						ImGui::Text( _( "Status:\t%s" ) , modules[ selected_module - 1 ].status );
-						ImGui::Text( _( "Target:\t%s" ) , modules[ selected_module - 1 ].target );
+						//ImGui::Text( _( "Target:\t%s" ) , modules[ selected_module - 1 ].target );
 						ImGui::Text( _( "Version:\t%s" ) , modules[ selected_module - 1 ].version );
 					}
 					ImGui::NewLine( );

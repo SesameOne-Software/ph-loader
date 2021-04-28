@@ -63,7 +63,7 @@ namespace ph {
     /// Retrieves username of currently authenticated user.
     /// </summary>
     /// <returns>String containing retrieved username.</returns>
-    __forceinline std::string_view get_username( ) {
+    __forceinline const char* get_username( ) {
         static auto GetUsername = reinterpret_cast< const char*( __stdcall* )( ) >( GetProcAddress( LoadLibraryA( _( "ph.dll" ) ) , _( "GetUsername" ) ) );
         return GetUsername( );
     }
